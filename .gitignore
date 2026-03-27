@@ -1,0 +1,34 @@
+# Node
+node_modules/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Build output
+dist/
+release/
+
+# Vite / Electron cache
+node_modules/.vite/
+.cache/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Env
+.env
+.env.*
+
+# SQLite / app data
+*.sqlite
+*.sqlite3
+
+# Electron user data
+chrome-profile-tool-data/
+
+# VSCode
+.vscode/

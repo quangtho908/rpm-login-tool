@@ -1,0 +1,83 @@
+{
+  "name": "chrome-profile-tool",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "main": "dist/main/index.js",
+  "author": "",
+  "license": "MIT",
+  "scripts": {
+    "dev": "node scripts/run-electron-vite.mjs dev",
+    "build": "electron-vite build && node scripts/copy-runtime.mjs",
+    "preview": "electron-vite preview",
+    "start": "node scripts/run-electron.mjs",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "rebuild:native": "electron-rebuild -f -w better-sqlite3",
+    "postinstall": "npm run rebuild:native",
+    "dist:mac": "npm run build && electron-builder --mac dmg",
+    "dist:win": "npm run build && electron-builder --win nsis --x64",
+    "lint": "echo \"(add eslint if needed)\""
+  },
+  "build": {
+    "appId": "com.chromeprofiletool.app",
+    "productName": "Chrome Profile Tool",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "dist/**",
+      "package.json"
+    ],
+    "asarUnpack": [
+      "**/*.node"
+    ],
+    "mac": {
+      "target": [
+        "dmg"
+      ],
+      "icon": "assets/icon.icns"
+    },
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "assets/icon.ico"
+    }
+  },
+  "dependencies": {
+    "@puppeteer/browsers": "^2.13.0",
+    "adm-zip": "^0.5.16",
+    "better-sqlite3": "^11.6.0",
+    "http-proxy-agent": "^7.0.2",
+    "https-proxy-agent": "^7.0.5",
+    "node-fetch": "^3.3.2",
+    "otplib": "^12.0.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "socks-proxy-agent": "^8.0.5",
+    "uuid": "^10.0.0",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "@electron/rebuild": "^3.6.0",
+    "@tailwindcss/postcss": "^4.2.2",
+    "@types/better-sqlite3": "^7.6.12",
+    "@types/react": "^18.3.18",
+    "@types/react-dom": "^18.3.5",
+    "@types/uuid": "^10.0.0",
+    "@vitejs/plugin-react": "^4.3.4",
+    "autoprefixer": "^10.4.27",
+    "electron": "^31.6.0",
+    "electron-builder": "^24.13.3",
+    "electron-vite": "^2.3.0",
+    "postcss": "^8.5.8",
+    "tailwindcss": "^4.2.2",
+    "typescript": "^5.7.3",
+    "vite": "^5.4.11"
+  }
+}
