@@ -9,7 +9,7 @@ import { getDb } from './db/db'
 // Avoid ESM named-exports interop issues: load Electron via require.
 const require = createRequire(import.meta.url)
 const electron = require('electron') as typeof import('electron')
-const { app, BrowserWindow } = electron
+const { app, BrowserWindow, screen } = electron
 
 process.on('uncaughtException', (err) => {
   // eslint-disable-next-line no-console
@@ -25,13 +25,14 @@ let mainWindow: import('electron').BrowserWindow | null = null
 async function createWindow() {
   const preloadPath = fileURLToPath(new URL('../preload/index.cjs', import.meta.url))
   const rendererIndexPath = fileURLToPath(new URL('../renderer/index.html', import.meta.url))
+  const { width: workWidth, height: workHeight } = screen.getPrimaryDisplay().workAreaSize
 
   // eslint-disable-next-line no-console
   console.log('[main] preloadPath =', preloadPath, 'exists=', existsSync(preloadPath))
 
   mainWindow = new BrowserWindow({
-    width: 1100,
-    height: 750,
+    width: Math.floor(workWidth * 0.9),
+    height: Math.floor(workHeight * 0.9),
     webPreferences: {
       preload: preloadPath,
       contextIsolation: true,
