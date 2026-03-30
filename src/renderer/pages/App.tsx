@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import type { ProfileRecord, ProxyRecord, Settings } from '../../shared/types'
 import TotpModal from '../components/TotpModal'
+import TotpCodeModal from '../components/TotpCodeModal'
 import ExportModal from '../components/ExportModal'
 import ImportModal from '../components/ImportModal'
 import logo from '../../../assets/icon.png'
@@ -193,6 +194,9 @@ function ProfilesTab(props: {
   const [totpOpen, setTotpOpen] = useState(false)
   const [totpProfileId, setTotpProfileId] = useState<string | null>(null)
   const [totpProfileName, setTotpProfileName] = useState<string | undefined>(undefined)
+  const [totpCodeOpen, setTotpCodeOpen] = useState(false)
+  const [totpCodeProfileId, setTotpCodeProfileId] = useState<string | null>(null)
+  const [totpCodeProfileName, setTotpCodeProfileName] = useState<string | undefined>(undefined)
   const [search, setSearch] = useState('')
   const [page, setPage] = useState(1)
 
@@ -344,13 +348,10 @@ function ProfilesTab(props: {
 
                       <button
                         className={buttonOutline}
-                        onClick={async () => {
-                          try {
-                            const r = await window.api.totpGetCode({ profileId: p.id })
-                            alert(`TOTP: ${r.code} (valid ~${r.secondsRemaining}s)`)
-                          } catch (e: any) {
-                            alert(String(e?.message ?? e))
-                          }
+                        onClick={() => {
+                          setTotpCodeProfileId(p.id)
+                          setTotpCodeProfileName(p.name)
+                          setTotpCodeOpen(true)
                         }}
                       >
                         Get 2FA
@@ -421,6 +422,17 @@ function ProfilesTab(props: {
               alert(String(e?.message ?? e))
               throw e
             }
+          }}
+        />
+
+        <TotpCodeModal
+          open={totpCodeOpen}
+          profileId={totpCodeProfileId}
+          profileName={totpCodeProfileName}
+          onClose={() => {
+            setTotpCodeOpen(false)
+            setTotpCodeProfileId(null)
+            setTotpCodeProfileName(undefined)
           }}
         />
       </section>
