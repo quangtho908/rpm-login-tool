@@ -20,7 +20,8 @@
   },
   "build": {
     "appId": "com.chromeprofiletool.app",
-    "productName": "Chrome Profile Tool",
+    "productName": "stool",
+    "artifactName": "stool-${version}.${ext}",
     "directories": {
       "output": "release"
     },
