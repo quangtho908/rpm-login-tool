@@ -9,7 +9,7 @@ export default defineConfig({
       rollupOptions: {
         // Keep heavy/native/commonjs deps as runtime requires (not bundled)
         // - better-sqlite3 is a native Node addon (.node)
-        external: ['@puppeteer/browsers', 'better-sqlite3', 'adm-zip']
+        external: ['@puppeteer/browsers', 'better-sqlite3', 'adm-zip', 'bufferutil', 'utf-8-validate']
       }
     },
     resolve: {
